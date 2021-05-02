@@ -1,0 +1,38 @@
+.car-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #0061a8;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 25px;
+  cursor: pointer;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: transform 0.25s ease-out;
+  margin-bottom: 20px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+h2 {
+  font-family: -apple-system;
+  font-weight: bolder;
+  font-size: 30px;
+  color: #eeeeee;
+}
+
+p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  color: #eeeeee;
+}

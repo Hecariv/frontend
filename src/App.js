@@ -1,25 +1,62 @@
-import logo from './logo.svg';
 import './App.css';
+import LoginAndSignUp from "./login-and-sign-up/LoginAndSignUp";
+import Nav from "./components/nav/Nav";
+import {Route, Switch} from "react-router-dom"
+import {auth, createUserProfileDocument} from "./firebase/Firebase";
+import {Component} from "react";
+import Cars from "./components/cars/Cars";
+import AddCarForm from "./components/add-car-form/AddCarForm";
+import UpdateCar from "./components/update-car/UpdateCar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            currentUser: null,
+        }
+    }
+    unsubscribeFromAuth = null;
+
+    componentDidMount() {
+        this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+            if (userAuth) {
+                const userRef = await createUserProfileDocument(userAuth);
+
+                userRef.onSnapshot(snapshot => {
+                    this.setState({
+                        currentUser: {
+                            id: snapshot.id,
+                            ...snapshot.data()
+                        }
+                    })
+                })
+            } else {
+                this.setState({currentUser: userAuth})
+            }
+            console.log(this.state)
+        });
+    }
+
+    componentWillUnmount() {
+        this.unsubscribeFromAuth();
+    }
+
+    render() {
+        return (
+            <div>
+                <Nav currentUser={this.state.currentUser}/>
+                <Switch>
+                    <Route exact path={'/'} component={LoginAndSignUp} />
+                    <Route exact path={'/cars'} component={Cars}/>
+                    <Route exact path={'/cars/add'} component={AddCarForm} />
+                    <Route path={'/cars/update'} component={UpdateCar} />
+                </Switch>
+            </div>
+        );
+    }
+
 }
 
 export default App;

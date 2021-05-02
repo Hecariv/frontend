@@ -1,0 +1,27 @@
+.add-car-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-car {
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 380px;
+
+
+  .title {
+    margin: 10px 0;
+    color: #0061a8;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .add-car-form {
+    position: center;
+  }
+}
